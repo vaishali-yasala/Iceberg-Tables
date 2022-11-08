@@ -4,8 +4,8 @@ Iceberg is a high-performance format for huge analytic tables. Iceberg brings th
 
 The Iceberg table format offers many features to help power your data lake architecture.
 
-1. Expressive SQL
-2. Schema evolution 
+1. Schema evolution 
+2. Expressive SQL
 3. Partition evolution 
 4. Time travel and rollback
 5. Transactional consistency
@@ -50,4 +50,27 @@ Look at the extensive information of the table trips.
 ![img](/Input_and_Output_images/Description_2.png)
 
 Look at the number of trip records available in the database.
+![img](/Input_and_Output_images/count.png)
 
+Now that the data is read, let us explore some of the Iceberg's features given above.
+
+## 1. Schema Evolution 
+</br>
+Schema evolution supports add, drop, update, or rename, and has no side-effects. 
+
+- Add- add a new column to the table or to a nested struct
+- Drop - remove an existing column from the table or a nested struct
+- Rename - rename an existing column or field in a nested struct
+- Update - widen the type of a column, struct field, map key, map value, or list element
+- Reorder - change the order of columns or fields in a nested struct
+
+Iceberg schema updates are metadata changes, so no data files need to be rewritten to perform the update.
+
+Below is the snapshot of some of ways to alter the table with Schema Evolution.
+![img](/Input_and_Output_images/Schema_evolution.png)
+
+Description of the new altered table
+![img](/Input_and_Output_images/schema_evolution_description.png)
+
+Let us look at a part of the newly updated table where VendorId is 1. 
+![img](/Input_and_Output_images/Select.png)
