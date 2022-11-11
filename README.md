@@ -144,7 +144,21 @@ ICEBERG'S HIDDEN PARTITIONING -
 A table's partitioning can be updated in place and applied only to newly written data. Query plans are then split, using the old partition scheme for data written before the partition scheme was changed, and using the new partition scheme for data written after. People querying the table don't even have to be aware of this split. Simple predicates in WHERE clauses are automatically converted to partition filters that prune out files with no matches. This is what's referred to in Iceberg as Hidden Partitioning.
 
 ![img](/Input_and_Output_images/partition.png)
+![img](/Input_and_Output_images/partition_description.png)
 
 Iceberg can partition timestamps by year, month, day, and hour granularity.
 
 Adding a partition field is a metadata operation and does not change any of the existing table data. New data will be written with the new partitioning, but existing data will remain in the old partition layout. Old data files will have null values for the new partition fields in metadata tables.
+
+Partition fields can be removed using DROP PARTITION FIELD. 
+
+> ALTER TABLE tlc.trips DROP PARTITION FIELD tpep_dropoff_datetime
+
+Note that although the partition is removed, the column will still exist in the table schema.
+
+Dropping a partition field is a metadata operation and does not change any of the existing table data. New data will be written with the new partitioning, but existing data will remain in the old partition layout.
+
+A partition field can be replaced by a new partition field in a single metadata update by using REPLACE PARTITION FIELD query. 
+
+![img](/Input_and_Output_images/replace_partition.png)
+![img](/Input_and_Output_images/replace_partition_description.png)
